@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:stackoverflown;assembly=stackoverflown"
+	xmlns:ValueConverters="clr-namespace:stackoverflown;assembly=stackoverflown"
+	x:Class="stackoverflown.QuestionsListPage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+				<ValueConverters:DateTimeValueConverter x:Key="DateTimeConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="5,40,5,5">
+				<ListView 
+				ItemsSource="{Binding QuestionsList}" 
+				IsEnabled="{Binding IsTableEnabled}" 
+				IsVisible="{Binding IsTableEnabled}" 
+				CachingStrategy="RecycleElement" 
+				HasUnevenRows="true"
+				SeparatorColor="Black"
+				>
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<!--<ViewCell.View>-->
+									<!--<Grid HorizontalOptions="FillAndExpand">
+									    <Grid.RowDefinitions>
+									        <RowDefinition ></RowDefinition>
+											<RowDefinition ></RowDefinition>
+									    </Grid.RowDefinitions>
+									    <Grid.ColumnDefinitions>
+									        <ColumnDefinition ></ColumnDefinition>
+									        <ColumnDefinition ></ColumnDefinition>
+									    </Grid.ColumnDefinitions>
+									    <Label Grid.Column="0" Grid.Row="0" Text="{Binding title}"/>
+										
+										<Label Text="{Binding answers_count}" FontSize="10" Grid.Row="0" Grid.Column="1"/>
+										<Label Text="{Binding creation_date, Converter={StaticResource DateTimeConverter}}"  FontSize="10" Grid.Row="1" Grid.Column="1" />
+
+										<local:HTMLLabel  Grid.Column="0" Grid.Row="1" Text="{Binding body}" />
+
+								    </Grid>-->
+								
+									<StackLayout Orientation="Vertical" Spacing="2">
+										<!--<Label Text="{Binding answers_count}" FontSize="10" HorizontalOptions="EndAndExpand"/>
+										<Label Text="{Binding creation_date, Converter={StaticResource DateTimeConverter}}"  FontSize="10" HorizontalOptions="EndAndExpand" />
+										<Label Text="{Binding title}" HorizontalOptions="StartAndExpand"/>-->
+										<StackLayout Orientation="Horizontal" Spacing="1">
+								          <Label Text="{Binding owner.display_name}" FontSize="12" HorizontalOptions="Start"/>
+								          <Label Text="{Binding creation_date, Converter={StaticResource DateTimeConverter}}"  FontSize="10" HorizontalOptions="EndAndExpand" />
+								        </StackLayout>
+
+										
+										<StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="1">
+								          <Label Text="Answers:" FontSize="12"/>
+								          <Label Text="{Binding answers_count}" FontSize="12"/>
+								        </StackLayout>
+										
+										<local:LimitedLabel Text="{Binding title}" HorizontalOptions="Start" FontSize="14"/>
+
+
+										<local:HTMLLabel Text="{Binding body}" />
+									</StackLayout>
+								
+								<!--</ViewCell.View>-->
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+			</ListView>
+			<ActivityIndicator
+           		IsRunning="{Binding IsBusy}"
+				IsVisible="{Binding IsBusy}"
+				VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+    	</Grid>
+	</ContentPage.Content>
+</ContentPage>
