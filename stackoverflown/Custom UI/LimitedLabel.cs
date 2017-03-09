@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace stackoverflown
 {
-	public class LimitedLabel : Label
+	public class QuestionsPageLimitedLabel : Label
 	{
 		
 	}

@@ -7,15 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace stackoverflown
 {
 	public class DataService : IDataService
     {
-		public async Task<List<Question>> getDataFromService(string queryString)
+		public async Task<ObservableCollection<Question>> getQuestionsFromService(string queryString)
         {
 			dynamic response;
-			var questions = new List<Question>();
+			var questions = new ObservableCollection<Question>();
 			var handler = new HttpClientHandler();
 			if (handler.SupportsAutomaticDecompression)
 				handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
@@ -61,6 +62,20 @@ namespace stackoverflown
 			return questions;
 
         }
+
+		public async Task<List<Answer>> getAnswersFromService(string answer_id)
+		{
+			var answers = new List<Answer>();
+			var handler = new HttpClientHandler();
+			if (handler.SupportsAutomaticDecompression)
+				handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+
+			var httpClient = new HttpClient(handler);
+
+			dynamic response = await httpClient.GetAsync(string.Format(Constants.stackoverflowAnswersQuery, answer_id));
+
+			return answers;
+		}
 
 
     }

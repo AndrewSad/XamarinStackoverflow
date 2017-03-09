@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:local="clr-namespace:stackoverflown;assembly=stackoverflown"
+	xmlns:ValueConverters="clr-namespace:stackoverflown;assembly=stackoverflown"
+	x:Class="stackoverflown.AnswersListPage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+				<ValueConverters:DateTimeValueConverter x:Key="DateTimeConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Vertical" BackgroundColor="#DCF0CA">
+				<StackLayout Orientation="Horizontal" Spacing="1" Padding="2">
+		          	<Label Text="{Binding ThisQuestion.owner.display_name}" FontSize="12" HorizontalOptions="Start"/>
+		          	<Label Text="{Binding ThisQuestion.creation_date, Converter={StaticResource DateTimeConverter}}"  FontSize="10" HorizontalOptions="EndAndExpand" />
+				</StackLayout>
+				<StackLayout Orientation="Horizontal" Spacing="1" Padding="2">
+		          	<Label Text="{Binding ThisQuestion.answer_count}"  FontSize="10" HorizontalOptions="EndAndExpand" />
+				</StackLayout>
+			
+				<ScrollView>
+				<Label Text="{Binding ThisQuestion.title}" />
+				<local:AnswersPageHTMLLabel Text="{Binding ThisQuestion.body}" />
+				</ScrollView>
+			</StackLayout>
+			<!--	Black line between controls		-->
+			<StackLayout BackgroundColor="Black" HeightRequest="1" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsTableVisible}"></StackLayout>
+			<ListView
+				ItemsSource="{Binding AnswersList}"
+				CachingStrategy="RecycleElement" 
+				HasUnevenRows="true"
+				SeparatorColor="Black"
+				IsEnabled="true"
+				IsVisible="{Binding IsTableVisible}"
+
+				>
+			<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout Orientation="Vertical" Spacing="2">
+								<StackLayout Orientation="Horizontal" Spacing="1">
+						          <Label Text="{Binding owner.display_name}" FontSize="12" HorizontalOptions="Start"/>
+						          <Label Text="{Binding creation_date, Converter={StaticResource DateTimeConverter}}"  FontSize="10" HorizontalOptions="EndAndExpand" />
+						        </StackLayout>
+						        <Label Text="{Binding title}" HorizontalOptions="Start" FontSize="14"/>
+						        <StackLayout Orientation="Horizontal" Padding="5">
+									<local:AnswersPageHTMLLabel Text="{Binding body}" />
+									<Label Text="✓" IsVisible="{Binding is_accepted}" TextColor="Red" FontSize="16"/>
+								</StackLayout>
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+					</ListView.ItemTemplate>	
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

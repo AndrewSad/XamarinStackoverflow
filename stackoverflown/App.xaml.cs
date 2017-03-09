@@ -11,7 +11,11 @@ namespace stackoverflown
 
 			SetupIOC();
 
-			MainPage = FreshMvvm.FreshPageModelResolver.ResolvePageModel<QuestionsListPageModel>();
+			var firstPage = FreshMvvm.FreshPageModelResolver.ResolvePageModel<QuestionsListPageModel>();
+
+			var navPage = new FreshMvvm.FreshNavigationContainer(firstPage);
+
+			MainPage = navPage;
 		}
 
 		void SetupIOC()
